@@ -15,11 +15,15 @@ export default class Alarm {
 	}
 
 	public check() {
-		const psiPressureValue = this.sensor.popNextPressurePsiValue();
+		const psiPressureValue = this.getPsiPressureValue();
 
 		if (psiPressureValue < this.lowPressureThreshold || this.highPressureThreshold < psiPressureValue) {
 			this.alarmOn = true;
 		}
+	}
+
+	protected getPsiPressureValue() {
+		return this.sensor.popNextPressurePsiValue();
 	}
 
 	public isAlarmOn() {
