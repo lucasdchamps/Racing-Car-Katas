@@ -11,6 +11,11 @@ describe('Tyre Pressure Monitoring System', () => {
 			expect(alarm.isAlarmOn()).eql(false);
 		});
 
+		it('foo', () => {
+			const alarm = new Alarm();
+			expect(alarm.isAlarmOn()).eql(true);
+		});
+
 	});
 
 });
