@@ -1,12 +1,13 @@
 import { expect } from 'chai';
 import 'mocha';
 import Alarm from '../tire-pressure-monitoring-system/alarm';
+import {ISensor} from "../tire-pressure-monitoring-system/sensor";
 
 describe('Tyre Pressure Monitoring System', () => {
 
 	describe('Alarm', () => {
 		it('foo', () => {
-			const alarm = new TestableAlarm(18);
+			const alarm = new Alarm(new FakeSensor(18));
 
 			alarm.check();
 
@@ -14,22 +15,19 @@ describe('Tyre Pressure Monitoring System', () => {
 		});
 
 		it('foo', () => {
-			const alarm = new TestableAlarm(22);
+			const alarm = new Alarm(new FakeSensor(22));
 
 			alarm.check();
 
 			expect(alarm.isAlarmOn()).eql(true);
 		});
 
-		class TestableAlarm extends Alarm {
+		class FakeSensor implements ISensor {
 			tirePressure: number;
-
 			constructor(tirePressure: number) {
-				super();
 				this.tirePressure = tirePressure;
 			}
-
-			protected getPsiPressureValue(): number {
+			popNextPressurePsiValue(): number {
 				return this.tirePressure;
 			}
 		}

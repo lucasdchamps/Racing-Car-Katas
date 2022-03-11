@@ -1,31 +1,26 @@
-import Sensor from './sensor';
+import Sensor, {ISensor} from './sensor';
 
 export default class Alarm {
 	private highPressureThreshold: number;
 	private lowPressureThreshold: number;
 
-	private sensor: Sensor;
+	private sensor: ISensor;
 	private alarmOn: boolean;
 
-	constructor() {
+	constructor(sensor:ISensor = new Sensor()) {
 		this.lowPressureThreshold = 17;
 		this.highPressureThreshold = 21;
-		this.sensor = new Sensor();
+		this.sensor = sensor;
 		this.alarmOn = false;
 	}
 
 	public check() {
-		const psiPressureValue = this.getPsiPressureValue();
+		const psiPressureValue = this.sensor.popNextPressurePsiValue();
 
 		if (psiPressureValue < this.lowPressureThreshold || this.highPressureThreshold < psiPressureValue) {
 			this.alarmOn = true;
 		}
 	}
-
-	protected getPsiPressureValue() {
-		return this.sensor.popNextPressurePsiValue();
-	}
-
 	public isAlarmOn() {
 		return this.alarmOn;
 	}
