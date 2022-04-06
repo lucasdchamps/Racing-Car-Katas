@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import 'mocha';
-import * as sinon from "sinon";
 import Alarm from '../tire-pressure-monitoring-system/alarm';
 import {ISensor} from "../tire-pressure-monitoring-system/sensor";
 import {stubInterface, stubObject} from "ts-sinon";
