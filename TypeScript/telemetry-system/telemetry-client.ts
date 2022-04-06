@@ -1,4 +1,18 @@
-export default class TelemetryClient {
+export interface ITelemetryClient {
+	diagnosticMessage(): string;
+
+	getOnlineStatus(): boolean;
+
+	connect(telemetryServerConnectionString: string): void;
+
+	disconnect(): void;
+
+	send(message: string): void;
+
+	receive(): string;
+}
+
+export default class TelemetryClient implements ITelemetryClient {
 
 	private onlineStatus: boolean;
 	private diagnosticMessageResult: string;
@@ -22,7 +36,7 @@ export default class TelemetryClient {
 		}
 
 		// simulate the operation on a real modem
-		const success = this.connectionEventsSimulator(1, 10) <= 8;
+		const success = this.connectionEventsSimulator(1, 10) <= 1;
 
 		this.onlineStatus = success;
 	}
@@ -84,5 +98,4 @@ export default class TelemetryClient {
 		const delta = max + 1 - min;
 		return min + Math.floor(delta * Math.random());
 	}
-
 }
